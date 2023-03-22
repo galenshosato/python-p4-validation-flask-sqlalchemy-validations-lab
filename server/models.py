@@ -36,13 +36,12 @@ class Post(db.Model):
 
     @validates('title')
     def validate_title(self, key, new_title):
-        bait = ["Won't Believe", "Secret", "Top", "Guess"]
-
+        clickbait = ["Won't Believe", "Secret", "Top", "Guess"]
         if not new_title:
             raise ValueError("Title is required")
         
-        elif new_title not in bait:
-            raise ValueError(f'Title must contain one of the following:{bait}')
+        elif not any(substring in new_title for substring in clickbait):
+            raise ValueError("No clickbait found")
         return new_title
     
     @validates('content')
